@@ -567,7 +567,7 @@
       <div><span class="t-out">» Red de Estabilización Séptuple (RES):</span> <span class="t-ok">7 nodos activos</span></div>
       <div><span class="t-out">» Segmentación periférica:</span> <span class="t-val">144,000 unidades/rotación</span></div>
       <div><span class="t-out">» Punto de Choque (φ⁻¹):</span> <span class="t-val">r = R × 0.618</span></div>
-      <div><span class="t-out">» Tourbillons axiales:</span> <span class="t-ok">integrados · deriva=0</span></div>
+      <div><span class="t-out">» Validadores de fase:</span> <span class="t-ok">integrados · deriva=0</span></div>
       <div><span class="t-out">» M-BFT consensus:</span> <span class="t-ok">READY</span></div>
       <div><span class="t-out">» Estado general:</span> <span class="t-ok">COHERENCIA CONFIRMADA ✓</span></div>
       <div>&nbsp;</div>
@@ -690,13 +690,13 @@
     </div>
     <div class="spec-card">
       <div class="spec-card-num">03.04</div>
-      <div class="spec-card-title">Tourbillons Axiales</div>
-      <div class="spec-card-body">Integración de <span class="hi3">7 tourbillons</span> montados en eje perpendicular en cada nodo de la RES. Su función: eliminar completamente la deriva gravitacional, garantizando que la medición de fase sea invariante a la orientación.</div>
+      <div class="spec-card-title">Estabilizadores de Fase</div>
+      <div class="spec-card-body">Integración de <span class="hi3">7 estabilizadores de fase</span> montados en eje perpendicular en cada nodo de la RES. Su función: eliminar completamente la deriva gravitacional, garantizando que la medición de fase sea invariante a la orientación.</div>
     </div>
     <div class="spec-card">
       <div class="spec-card-num">03.05</div>
       <div class="spec-card-title">Capa Visual Concéntrica</div>
-      <div class="spec-card-body">Arquitectura visual en tres capas: <span class="hi2">Squeleto (RES)</span> → <span class="hi">Flujo (Infinito ∞)</span> → <span class="hi3">Validación (Tourbillons)</span>. La auditoría visual del estado del sistema es posible a simple vista.</div>
+      <div class="spec-card-body">Arquitectura visual en tres capas: <span class="hi2">Squeleto (RES)</span> → <span class="hi">Flujo (Infinito ∞)</span> → <span class="hi3">Validadores de consenso local</span>. La auditoría visual del estado del sistema es posible a simple vista.</div>
     </div>
     <div class="spec-card">
       <div class="spec-card-num">03.06</div>
@@ -732,7 +732,7 @@
           <td><span style="color:var(--amber)">144,000</span> unidades/rotación</td>
         </tr>
         <tr>
-          <td class="key">Tourbillons</td>
+          <td class="key">Validadores de Fase</td>
           <td class="val">Montaje axial (eje perpendicular) en cada nodo RES para anular deriva gravitacional</td>
           <td><span style="color:var(--amber)">7</span> unidades integradas</td>
         </tr>
@@ -810,8 +810,8 @@
     </div>
     <div class="phase-row">
       <div class="phase-cell"><span class="phase-num">L3</span></div>
-      <div class="phase-cell" style="color:var(--bright)"><strong>Validación — Tourbillons</strong><br><span style="color:var(--muted);font-size:.65rem">7 Correctores Gravitacionales</span></div>
-      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">Capa de finalización y corrección. Los tourbillons eliminan la deriva gravitacional, garantizando que el estado registrado sea invariante al entorno. Oro 24k para modulación cromática de estados.</div>
+      <div class="phase-cell" style="color:var(--bright)"><strong>Validadores de Fase</strong><br><span style="color:var(--muted);font-size:.65rem">7 Correctores Gravitacionales</span></div>
+      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">Capa de finalización y corrección. Los validadores de fase eliminan la deriva gravitacional, garantizando que el estado registrado sea invariante al entorno. Oro 24k para modulación cromática de estados.</div>
     </div>
     <div class="phase-row">
       <div class="phase-cell"><span class="phase-num">L4</span></div>
@@ -845,7 +845,7 @@
         <li><span style="color:var(--green)">✓</span> Cero colisiones mecánicas en puntos de choque</li>
         <li><span style="color:var(--green)">✓</span> Flujo helicoidal continuo sin puntos muertos</li>
         <li><span style="color:var(--green)">✓</span> Ratio r/R = 0.618 verificable en planos</li>
-        <li><span style="color:var(--green)">✓</span> 7 tourbillons activos simultáneamente</li>
+        <li><span style="color:var(--green)">✓</span> 7 validadores de fase activos simultáneamente</li>
         <li><span style="color:var(--green)">✓</span> 144,000 estados registrables por ciclo</li>
         <li><span style="color:var(--green)">✓</span> Circuito cinemático cerrado confirmado</li>
       </ul>
