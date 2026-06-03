@@ -3,31 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>S7UE · Seven Unlock Engine — Arquitectura ARGI | AVATAR7</title>
+  <title>Protocolos S7UE | AVATAR7 Ecosistema</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg:        #060608;
-      --bg2:       #0c0c12;
-      --panel:     #0f0f18;
-      --border:    #1e1e2e;
-      --purple:    #8e44ad;
-      --purple2:   #a855f7;
-      --violet:    #6d28d9;
-      --gold:      #c9a84c;
-      --amber:     #d35400;
-      --text:      #d0d0e0;
-      --muted:     #5a5a7a;
-      --bright:    #f0eeff;
-      --green:     #22c55e;
-      --mono:      'Share Tech Mono', monospace;
-      --sans:      'Syne', sans-serif;
-      --code:      'Space Mono', monospace;
+      --bg:      #060608;
+      --panel:   #0f0f18;
+      --border:  #1e1e2e;
+      --purple:  #8e44ad;
+      --purple2: #a855f7;
+      --violet:  #6d28d9;
+      --gold:    #c9a84c;
+      --amber:   #d35400;
+      --text:    #d0d0e0;
+      --muted:   #5a5a7a;
+      --bright:  #f0eeff;
+      --green:   #22c55e;
+      --mono:    'Share Tech Mono', monospace;
+      --sans:    'Syne', sans-serif;
+      --code:    'Space Mono', monospace;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
 
     body {
@@ -38,7 +36,7 @@
       cursor: crosshair;
     }
 
-    /* ─── NOISE OVERLAY ─── */
+    /* NOISE */
     body::before {
       content: '';
       position: fixed; inset: 0;
@@ -46,7 +44,7 @@
       pointer-events: none; z-index: 9999; opacity: .35;
     }
 
-    /* ─── SCANLINES ─── */
+    /* SCANLINES */
     body::after {
       content: '';
       position: fixed; inset: 0;
@@ -54,35 +52,71 @@
       pointer-events: none; z-index: 9998;
     }
 
-    /* ─── NAV ─── */
+    /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 200;
       display: flex; align-items: center; justify-content: space-between;
-      padding: 18px 48px;
-      background: rgba(6,6,8,.85);
-      backdrop-filter: blur(12px);
+      padding: 0 48px;
+      height: 64px;
+      background: rgba(6,6,8,.92);
+      backdrop-filter: blur(14px);
       border-bottom: 1px solid var(--border);
     }
 
     .nav-logo {
       font-family: var(--sans);
       font-weight: 800;
-      font-size: 1.1rem;
+      font-size: 1rem;
       color: var(--bright);
       letter-spacing: .12em;
       text-transform: uppercase;
+      text-decoration: none;
+      flex-shrink: 0;
     }
     .nav-logo span { color: var(--purple2); }
 
-    .nav-tag {
-      font-size: .65rem;
-      color: var(--muted);
+    .nav-links {
+      display: flex; align-items: center; gap: 2px;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 8px 18px;
+      font-family: var(--mono);
+      font-size: .6rem;
       letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color .2s;
+      white-space: nowrap;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute; bottom: 4px; left: 18px; right: 18px;
+      height: 1px;
+      background: var(--purple2);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .25s;
+    }
+
+    .nav-links a:hover { color: var(--bright); }
+    .nav-links a:hover::after { transform: scaleX(1); }
+    .nav-links a.active { color: var(--purple2); }
+    .nav-links a.active::after { transform: scaleX(1); }
+
+    .nav-sep {
+      width: 1px; height: 20px;
+      background: var(--border);
+      flex-shrink: 0;
     }
 
     .nav-status {
       display: flex; align-items: center; gap: 8px;
-      font-size: .65rem; color: var(--green); letter-spacing: .15em;
+      font-size: .58rem; color: var(--green); letter-spacing: .15em;
+      flex-shrink: 0;
     }
     .nav-status::before {
       content: '';
@@ -92,19 +126,15 @@
       animation: pulse 2s infinite;
     }
 
-    @keyframes pulse {
-      0%,100% { opacity: 1; }
-      50% { opacity: .3; }
-    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
 
-    /* ─── HERO ─── */
+    /* ── HERO ── */
     .hero {
       min-height: 100vh;
       display: flex; flex-direction: column;
       align-items: center; justify-content: center;
       padding: 120px 48px 80px;
-      position: relative;
-      overflow: hidden;
+      position: relative; overflow: hidden;
     }
 
     .hero-grid {
@@ -115,768 +145,810 @@
       background-size: 60px 60px;
       animation: gridshift 20s linear infinite;
     }
-
-    @keyframes gridshift {
-      from { background-position: 0 0; }
-      to   { background-position: 60px 60px; }
-    }
+    @keyframes gridshift { from{background-position:0 0} to{background-position:60px 60px} }
 
     .hero-glow {
       position: absolute;
-      width: 700px; height: 700px;
-      background: radial-gradient(circle, rgba(142,68,173,.15) 0%, transparent 70%);
+      width: 800px; height: 800px;
+      background: radial-gradient(circle, rgba(142,68,173,.12) 0%, transparent 70%);
       top: 50%; left: 50%; transform: translate(-50%,-50%);
       pointer-events: none;
     }
 
     .hero-eyebrow {
-      font-size: .65rem;
-      letter-spacing: .3em;
-      color: var(--purple2);
-      margin-bottom: 24px;
-      text-transform: uppercase;
-      opacity: 0;
-      animation: fadein .6s .3s forwards;
+      font-size: .6rem; letter-spacing: .35em; color: var(--purple2);
+      margin-bottom: 20px; text-transform: uppercase;
+      opacity: 0; animation: fadein .6s .3s forwards;
     }
 
     .hero-title {
       font-family: var(--sans);
-      font-size: clamp(3rem, 8vw, 7rem);
-      font-weight: 800;
-      line-height: 1;
-      text-align: center;
-      color: var(--bright);
-      text-transform: uppercase;
-      letter-spacing: -.01em;
-      position: relative;
-      opacity: 0;
-      animation: fadein .8s .5s forwards;
+      font-size: clamp(2.6rem, 7vw, 6rem);
+      font-weight: 800; line-height: 1;
+      text-align: center; color: var(--bright);
+      text-transform: uppercase; letter-spacing: -.01em;
+      opacity: 0; animation: fadein .8s .5s forwards;
     }
-
     .hero-title .accent { color: var(--purple2); }
-    .hero-title .line2 {
-      display: block;
-      font-size: .38em;
-      letter-spacing: .25em;
-      color: var(--muted);
-      margin-top: 8px;
-      font-weight: 400;
+    .hero-title .sub {
+      display: block; font-size: .3em;
+      letter-spacing: .3em; color: var(--muted);
+      margin-top: 12px; font-weight: 400;
     }
 
-    .hero-sub {
-      margin-top: 32px;
-      font-size: .8rem;
-      color: var(--muted);
-      letter-spacing: .1em;
-      text-align: center;
-      max-width: 560px;
-      line-height: 1.9;
-      opacity: 0;
-      animation: fadein .8s .8s forwards;
+    .hero-desc {
+      margin-top: 28px; max-width: 580px;
+      font-size: .75rem; color: var(--muted);
+      letter-spacing: .08em; text-align: center; line-height: 2;
+      opacity: 0; animation: fadein .8s .8s forwards;
     }
 
-    .hero-badges {
-      display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;
-      margin-top: 32px;
-      opacity: 0;
-      animation: fadein .8s 1s forwards;
-    }
-
-    .badge {
-      padding: 5px 14px;
+    /* Section jump cards */
+    .hero-cards {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 1px; background: var(--border);
       border: 1px solid var(--border);
-      font-size: .6rem;
-      letter-spacing: .2em;
-      color: var(--muted);
-      text-transform: uppercase;
-    }
-    .badge.purple { border-color: var(--purple); color: var(--purple2); }
-    .badge.gold { border-color: var(--gold); color: var(--gold); }
-
-    /* ─── TERMINAL BLOCK ─── */
-    .terminal-wrap {
-      margin-top: 56px;
-      width: 100%; max-width: 720px;
-      opacity: 0;
-      animation: fadein .8s 1.2s forwards;
+      margin-top: 56px; width: 100%; max-width: 860px;
+      opacity: 0; animation: fadein .8s 1s forwards;
     }
 
-    .terminal {
-      background: #080810;
-      border: 1px solid var(--border);
-      padding: 24px 28px;
-      font-family: var(--code);
-      font-size: .72rem;
-      line-height: 2;
+    .hero-card {
+      background: var(--panel);
+      padding: 28px 24px;
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 10px;
+      transition: background .2s;
+      position: relative; overflow: hidden;
+    }
+    .hero-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 2px;
+      background: var(--purple);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform .3s;
+    }
+    .hero-card:hover { background: #14141f; }
+    .hero-card:hover::before { transform: scaleX(1); }
+
+    .hero-card-num {
+      font-size: .55rem; color: var(--muted); letter-spacing: .25em;
+    }
+    .hero-card-title {
+      font-family: var(--sans); font-size: .85rem;
+      font-weight: 700; color: var(--bright);
+      text-transform: uppercase; letter-spacing: .06em;
+    }
+    .hero-card-desc {
+      font-size: .62rem; color: var(--muted); line-height: 1.8;
+    }
+    .hero-card-arrow {
+      margin-top: 8px; font-size: .6rem;
+      color: var(--purple2); letter-spacing: .15em;
     }
 
-    .terminal-bar {
-      display: flex; gap: 6px; margin-bottom: 16px;
+    @keyframes fadein {
+      from { opacity:0; transform: translateY(16px); }
+      to   { opacity:1; transform: translateY(0); }
     }
-    .dot { width: 10px; height: 10px; border-radius: 50%; }
-    .dot.r { background: #ff5f57; }
-    .dot.y { background: #ffbd2e; }
-    .dot.g { background: #28c940; }
 
-    .t-prompt { color: var(--purple2); }
-    .t-cmd    { color: var(--bright); }
-    .t-out    { color: var(--muted); }
-    .t-val    { color: var(--gold); }
-    .t-ok     { color: var(--green); }
-    .t-err    { color: var(--amber); }
-    .t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--purple2); animation: blink 1s step-end infinite; vertical-align: middle; }
-
-    @keyframes blink { 50% { opacity: 0; } }
-
-    /* ─── SECTIONS ─── */
-    .section-wrap {
-      max-width: 1100px;
-      margin: 0 auto;
+    /* ── SECTION SHARED ── */
+    .section-block {
+      max-width: 1100px; margin: 0 auto;
       padding: 100px 48px;
     }
 
+    .section-header {
+      display: flex; align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 56px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+      flex-wrap: wrap; gap: 16px;
+    }
+
     .section-label {
-      font-size: .6rem;
-      letter-spacing: .35em;
-      color: var(--purple2);
-      text-transform: uppercase;
-      margin-bottom: 12px;
+      font-size: .58rem; letter-spacing: .35em;
+      color: var(--purple2); text-transform: uppercase;
+      margin-bottom: 10px;
     }
 
     .section-title {
       font-family: var(--sans);
-      font-size: clamp(1.8rem, 4vw, 3rem);
-      font-weight: 800;
-      color: var(--bright);
-      text-transform: uppercase;
-      margin-bottom: 48px;
-      letter-spacing: -.01em;
+      font-size: clamp(1.6rem, 3.5vw, 2.6rem);
+      font-weight: 800; color: var(--bright);
+      text-transform: uppercase; letter-spacing: -.01em;
     }
-
     .section-title span { color: var(--purple2); }
 
-    /* ─── DIVIDER ─── */
+    .section-tag {
+      font-size: .58rem; letter-spacing: .2em;
+      color: var(--muted); border: 1px solid var(--border);
+      padding: 5px 12px; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
     .divider {
-      border: none;
-      border-top: 1px solid var(--border);
+      border: none; border-top: 1px solid var(--border);
       margin: 0 48px;
     }
 
-    /* ─── SPEC GRID ─── */
-    .spec-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
+    /* ── REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(24px);
+      transition: opacity .7s, transform .7s;
+    }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* ── PROTOCOLO MAESTRO ── */
+    .step-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
     }
 
-    .spec-card {
-      background: var(--panel);
-      padding: 32px 28px;
-      transition: background .2s;
+    .step-card {
+      background: var(--panel); padding: 32px 28px;
+      transition: background .2s; position: relative;
     }
-    .spec-card:hover { background: #14141f; }
+    .step-card:hover { background: #14141f; }
 
-    .spec-card-num {
-      font-size: .6rem;
-      color: var(--muted);
-      letter-spacing: .2em;
-      margin-bottom: 16px;
+    .step-card-num {
+      font-size: .55rem; color: var(--muted);
+      letter-spacing: .25em; margin-bottom: 14px;
     }
 
-    .spec-card-title {
-      font-family: var(--sans);
-      font-size: 1rem;
-      font-weight: 700;
-      color: var(--bright);
-      text-transform: uppercase;
-      letter-spacing: .05em;
+    .step-card-title {
+      font-family: var(--sans); font-size: .95rem;
+      font-weight: 700; color: var(--bright);
+      text-transform: uppercase; letter-spacing: .05em;
       margin-bottom: 12px;
     }
 
-    .spec-card-body {
-      font-size: .72rem;
-      color: var(--muted);
-      line-height: 1.9;
+    .step-card-body {
+      font-size: .7rem; color: var(--muted); line-height: 1.9;
     }
 
-    .spec-card-body .hi { color: var(--amber); font-weight: bold; }
-    .spec-card-body .hi2 { color: var(--purple2); }
-    .spec-card-body .hi3 { color: var(--gold); }
+    .step-card-body strong { color: var(--bright); }
+    .step-card-body .hi  { color: var(--amber); }
+    .step-card-body .hi2 { color: var(--purple2); }
+    .step-card-body .hi3 { color: var(--gold); }
 
-    /* ─── FORMULA BOX ─── */
-    .formula-block {
-      margin: 48px 0;
-      border: 1px solid var(--purple);
-      padding: 32px 36px;
-      position: relative;
-      background: rgba(142,68,173,.04);
+    /* Nivel badges */
+    .nivel-badge {
+      display: inline-block;
+      font-size: .55rem; letter-spacing: .15em;
+      padding: 3px 10px; margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+    .nivel-1 { border: 1px solid var(--green);   color: var(--green); }
+    .nivel-2 { border: 1px solid var(--gold);    color: var(--gold); }
+    .nivel-3 { border: 1px solid var(--purple2); color: var(--purple2); }
+
+    /* Step list (numbered) */
+    .step-list {
+      display: flex; flex-direction: column; gap: 1px;
+      background: var(--border); border: 1px solid var(--border);
+      margin-top: 48px;
     }
 
-    .formula-block::before {
-      content: 'FÓRMULA CRÍTICA';
-      position: absolute; top: -9px; left: 24px;
-      background: var(--bg);
-      padding: 0 10px;
-      font-size: .55rem;
+    .step-item {
+      background: var(--panel);
+      display: grid; grid-template-columns: 64px 1fr;
+      gap: 0;
+    }
+
+    .step-item-num {
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--sans); font-size: 1.4rem; font-weight: 800;
       color: var(--purple2);
+      border-right: 1px solid var(--border);
+    }
+
+    .step-item-content {
+      padding: 22px 28px;
+    }
+
+    .step-item-title {
+      font-family: var(--sans); font-size: .8rem;
+      font-weight: 700; color: var(--bright);
+      text-transform: uppercase; letter-spacing: .06em;
+      margin-bottom: 6px;
+    }
+
+    .step-item-body {
+      font-size: .68rem; color: var(--muted); line-height: 1.8;
+    }
+
+    /* Info box */
+    .info-box {
+      border: 1px solid var(--border);
+      padding: 28px 32px; margin-top: 48px;
+      background: var(--panel); position: relative;
+    }
+    .info-box::before {
+      content: 'NOTA OPERATIVA';
+      position: absolute; top: -9px; left: 20px;
+      background: var(--bg); padding: 0 10px;
+      font-size: .52rem; color: var(--muted);
       letter-spacing: .25em;
     }
+    .info-box p {
+      font-size: .7rem; color: var(--muted); line-height: 1.9;
+    }
+    .info-box strong { color: var(--bright); }
 
-    .formula {
-      font-family: var(--code);
-      font-size: 1.5rem;
-      color: var(--amber);
-      letter-spacing: .05em;
+    /* ── PROTOCOLO TÉCNICO ── */
+    .tech-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 1px; background: var(--border); border: 1px solid var(--border);
+    }
+
+    .tech-card {
+      background: var(--panel); padding: 32px 28px;
+      transition: background .2s;
+    }
+    .tech-card:hover { background: #14141f; }
+    .tech-card.full { grid-column: 1 / -1; }
+
+    .tech-card-label {
+      font-size: .55rem; color: var(--muted);
+      letter-spacing: .25em; text-transform: uppercase;
       margin-bottom: 12px;
     }
 
-    .formula-desc {
-      font-size: .7rem;
-      color: var(--muted);
-      line-height: 1.8;
-    }
-
-    /* ─── TABLE ─── */
-    .spec-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin: 32px 0;
-      font-size: .72rem;
-    }
-
-    .spec-table th {
-      background: var(--border);
-      color: var(--muted);
-      font-family: var(--mono);
-      letter-spacing: .15em;
-      text-transform: uppercase;
-      font-size: .6rem;
-      padding: 14px 18px;
-      text-align: left;
-      border: 1px solid #1a1a2a;
-    }
-
-    .spec-table td {
-      padding: 14px 18px;
-      border: 1px solid #1a1a2a;
-      color: var(--text);
-      vertical-align: top;
-    }
-
-    .spec-table tr:hover td { background: rgba(142,68,173,.04); }
-
-    .spec-table .key { color: var(--purple2); }
-    .spec-table .val { color: var(--bright); }
-
-    /* ─── RES DIAGRAM ─── */
-    .diagram-wrap {
-      display: flex;
-      align-items: center;
-      gap: 60px;
-      margin: 48px 0;
-      flex-wrap: wrap;
-    }
-
-    .legend-item {
-      display: flex;
-      align-items: flex-start;
-      gap: 14px;
-      margin-bottom: 20px;
-    }
-
-    .legend-dot {
-      width: 8px; height: 8px;
-      border-radius: 50%;
-      margin-top: 5px;
-      flex-shrink: 0;
-    }
-
-    .legend-label {
-      font-size: .68rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    .legend-label strong { color: var(--bright); display: block; margin-bottom: 3px; font-family: var(--sans); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
-
-    /* ─── VALUE PROPS ─── */
-    .value-strip {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-      margin: 48px 0;
-    }
-
-    .value-item {
-      background: var(--panel);
-      padding: 28px 24px;
-    }
-
-    .value-icon {
-      font-size: 1.4rem;
+    .tech-card-title {
+      font-family: var(--sans); font-size: .95rem;
+      font-weight: 700; color: var(--bright);
+      text-transform: uppercase; letter-spacing: .05em;
       margin-bottom: 14px;
     }
 
-    .value-name {
-      font-family: var(--sans);
-      font-size: .8rem;
-      font-weight: 700;
-      color: var(--bright);
-      text-transform: uppercase;
-      letter-spacing: .08em;
+    .tech-card-body {
+      font-size: .7rem; color: var(--muted); line-height: 1.9;
+    }
+    .tech-card-body strong { color: var(--bright); }
+    .tech-card-body .hi  { color: var(--amber); }
+    .tech-card-body .hi2 { color: var(--purple2); }
+    .tech-card-body .hi3 { color: var(--gold); }
+
+    .tech-list {
+      list-style: none; padding: 0; margin-top: 12px;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .tech-list li {
+      display: flex; gap: 10px; align-items: flex-start;
+      font-size: .68rem; color: var(--muted); line-height: 1.7;
+    }
+    .tech-list li::before {
+      content: '›';
+      color: var(--purple2); flex-shrink: 0; margin-top: 1px;
+    }
+    .tech-list li strong { color: var(--bright); }
+
+    /* CCT collapse steps */
+    .cct-steps {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 1px; background: var(--border);
+      border: 1px solid var(--border); margin-top: 48px;
+    }
+
+    .cct-step {
+      background: var(--panel); padding: 28px 24px;
+      text-align: center;
+    }
+
+    .cct-step-icon {
+      font-size: 1.6rem; margin-bottom: 14px;
+    }
+
+    .cct-step-num {
+      font-family: var(--sans); font-size: 2rem;
+      font-weight: 800; color: var(--purple2);
+      line-height: 1; margin-bottom: 10px;
+    }
+
+    .cct-step-title {
+      font-family: var(--sans); font-size: .75rem;
+      font-weight: 700; color: var(--bright);
+      text-transform: uppercase; letter-spacing: .06em;
       margin-bottom: 8px;
     }
 
-    .value-desc {
-      font-size: .65rem;
-      color: var(--muted);
-      line-height: 1.8;
+    .cct-step-body {
+      font-size: .65rem; color: var(--muted); line-height: 1.8;
     }
 
-    /* ─── PHASE TABLE ─── */
-    .phase-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 1fr;
-      gap: 1px;
-      background: var(--border);
-      border-bottom: 1px solid var(--border);
+    /* ── REGISTRO MAESTRO ── */
+    .form-wrap {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: start;
     }
 
-    .phase-row:first-child { border-top: 1px solid var(--border); }
-
-    .phase-cell {
+    .form-panel {
+      border: 1px solid var(--border);
       background: var(--panel);
-      padding: 20px 24px;
-      font-size: .7rem;
+      padding: 40px 36px;
+      position: relative;
     }
 
-    .phase-cell.head {
-      background: var(--border);
-      color: var(--muted);
-      font-size: .58rem;
-      letter-spacing: .2em;
-      text-transform: uppercase;
+    .form-panel::before {
+      content: 'REGISTRO ACTIVO S7UE';
+      position: absolute; top: -9px; left: 20px;
+      background: var(--bg); padding: 0 10px;
+      font-size: .52rem; color: var(--purple2);
+      letter-spacing: .25em;
     }
 
-    .phase-num {
-      color: var(--purple2);
-      font-family: var(--sans);
-      font-weight: 700;
-      font-size: 1.1rem;
+    .form-group {
+      margin-bottom: 20px;
     }
 
-    /* ─── FOOTER ─── */
+    .form-label {
+      display: block; font-size: .58rem;
+      color: var(--muted); letter-spacing: .2em;
+      text-transform: uppercase; margin-bottom: 8px;
+    }
+
+    .form-input,
+    .form-select {
+      width: 100%; background: var(--bg);
+      border: 1px solid var(--border);
+      color: var(--bright); font-family: var(--mono);
+      font-size: .72rem; padding: 12px 16px;
+      outline: none; appearance: none;
+      transition: border-color .2s;
+    }
+
+    .form-input::placeholder { color: var(--muted); }
+    .form-input:focus,
+    .form-select:focus { border-color: var(--purple); }
+
+    .form-select {
+      cursor: pointer;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%235a5a7a'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 14px center;
+      padding-right: 36px;
+    }
+
+    .form-select option { background: var(--bg); }
+
+    .form-hidden {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border: 1px solid var(--border);
+      background: rgba(142,68,173,.04); margin-bottom: 20px;
+    }
+
+    .form-hidden-label {
+      font-size: .58rem; color: var(--muted);
+      letter-spacing: .15em; text-transform: uppercase;
+    }
+
+    .form-hidden-val {
+      font-family: var(--code); font-size: .7rem;
+      color: var(--gold);
+    }
+
+    .form-btn {
+      width: 100%; padding: 14px;
+      background: var(--purple); border: none;
+      color: var(--bright); font-family: var(--sans);
+      font-size: .75rem; font-weight: 700;
+      letter-spacing: .15em; text-transform: uppercase;
+      cursor: pointer; transition: background .2s;
+    }
+    .form-btn:hover { background: var(--purple2); }
+
+    /* Info sidebar */
+    .register-info {
+      display: flex; flex-direction: column; gap: 1px;
+    }
+
+    .register-info-item {
+      background: var(--panel); border: 1px solid var(--border);
+      border-bottom: none; padding: 22px 24px;
+    }
+    .register-info-item:last-child { border-bottom: 1px solid var(--border); }
+
+    .register-info-label {
+      font-size: .55rem; color: var(--muted);
+      letter-spacing: .25em; text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+
+    .register-info-val {
+      font-family: var(--sans); font-size: .95rem;
+      font-weight: 700; color: var(--bright);
+    }
+
+    .register-info-val.purple { color: var(--purple2); }
+    .register-info-val.gold   { color: var(--gold); }
+    .register-info-val.green  { color: var(--green); }
+    .register-info-val.amber  { color: var(--amber); }
+
+    .register-info-sub {
+      font-size: .62rem; color: var(--muted);
+      margin-top: 4px; line-height: 1.6;
+    }
+
+    /* Terminal confirm */
+    .terminal-confirm {
+      margin-top: 20px;
+      background: #080810; border: 1px solid var(--border);
+      padding: 18px 22px; font-family: var(--code);
+      font-size: .65rem; line-height: 2;
+      display: none;
+    }
+
+    .terminal-confirm.show { display: block; }
+    .t-prompt { color: var(--purple2); }
+    .t-out    { color: var(--muted); }
+    .t-ok     { color: var(--green); }
+    .t-val    { color: var(--gold); }
+    .t-cursor { display: inline-block; width:7px; height:12px; background:var(--purple2); animation: blink 1s step-end infinite; vertical-align: middle; }
+    @keyframes blink { 50%{opacity:0} }
+
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--border);
       padding: 48px;
-      display: flex;
-      align-items: center;
+      display: flex; align-items: center;
       justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 20px;
-      font-size: .6rem;
-      color: var(--muted);
+      flex-wrap: wrap; gap: 20px;
+      font-size: .58rem; color: var(--muted);
       letter-spacing: .15em;
     }
 
     .footer-logo {
-      font-family: var(--sans);
-      font-weight: 800;
-      font-size: .9rem;
-      color: var(--bright);
+      font-family: var(--sans); font-weight: 800;
+      font-size: .9rem; color: var(--bright);
     }
     .footer-logo span { color: var(--purple2); }
 
-    /* ─── ANIMATIONS ─── */
-    @keyframes fadein {
-      from { opacity: 0; transform: translateY(16px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-
-    .reveal {
-      opacity: 0;
-      transform: translateY(24px);
-      transition: opacity .7s, transform .7s;
-    }
-    .reveal.visible {
-      opacity: 1;
-      transform: none;
-    }
-
-    /* ─── MOBILE ─── */
+    /* ── MOBILE ── */
     @media (max-width: 768px) {
-      nav { padding: 16px 20px; }
+      nav { padding: 0 20px; }
+      .nav-links { display: none; }
       .hero { padding: 100px 20px 60px; }
-      .section-wrap { padding: 60px 20px; }
+      .hero-cards { grid-template-columns: 1fr; }
+      .section-block { padding: 60px 20px; }
       .divider { margin: 0 20px; }
+      .tech-grid { grid-template-columns: 1fr; }
+      .tech-card.full { grid-column: 1; }
+      .cct-steps { grid-template-columns: 1fr; }
+      .form-wrap { grid-template-columns: 1fr; gap: 24px; }
       footer { padding: 32px 20px; }
-      .diagram-wrap { flex-direction: column; }
-      .phase-row { grid-template-columns: 60px 1fr; }
-      .phase-row .phase-cell:last-child { display: none; }
     }
   </style>
 </head>
 <body>
 
-<!-- NAV -->
+<!-- ═══ NAV ═══ -->
 <nav>
-  <div>
-    <div class="nav-logo">AVATAR<span>7</span></div>
-    <div class="nav-tag">SISTEMA OPERATIVO · SOLANA MAINNET</div>
+  <a href="#hero" class="nav-logo">AVATAR<span>7</span></a>
+  <div class="nav-links">
+    <a href="#protocolo-maestro" class="nav-link">01 · Protocolo Maestro</a>
+    <div class="nav-sep"></div>
+    <a href="#protocolo-tecnico" class="nav-link">02 · Protocolo Técnico</a>
+    <div class="nav-sep"></div>
+    <a href="#registro-maestro" class="nav-link">03 · Registro Maestro</a>
   </div>
-  <div class="nav-status">SISTEMA ACTIVO · PHASE DEPLOYMENT</div>
+  <div class="nav-status">SISTEMA ACTIVO · SOLANA MAINNET</div>
 </nav>
 
-<!-- HERO -->
-<section class="hero">
+<!-- ═══ HERO ═══ -->
+<section id="hero" class="hero">
   <div class="hero-grid"></div>
   <div class="hero-glow"></div>
 
-  <p class="hero-eyebrow">White Paper · Arquitectura ARGI · S7UE v1.0</p>
+  <p class="hero-eyebrow">AVATAR7 · S7UE · Arquitectura ARGI · Ecosistema Solana</p>
 
   <h1 class="hero-title">
-    Seven<span class="accent"> Unlock</span><br>Engine
-    <span class="line2">Registro Geométrico Inercial para Solana</span>
+    Protocolos<span class="accent"> S7UE</span>
+    <span class="sub">Sistema de Validación Inercial · Liquidación Dinámica RWA</span>
   </h1>
 
-  <p class="hero-sub">
-    Motor de computación inercial de precisión con lógica determinista basada en geometrías concéntricas. Validación física inmutable para activos digitales y redes blockchain.
+  <p class="hero-desc">
+    Motor de registro geométrico inercial para la liquidación de activos del mundo real. Tres capas operativas: protocolo maestro, arquitectura técnica y registro activo en malla.
   </p>
 
-  <div class="hero-badges">
-    <span class="badge purple">SOLANA MAINNET</span>
-    <span class="badge purple">PoH + PoS</span>
-    <span class="badge gold">RWA · ASSET CLASS</span>
-    <span class="badge">USA · IRS VERIFIED</span>
-    <span class="badge">ALGORITHMIC EXECUTION</span>
-  </div>
-
-  <div class="terminal-wrap">
-    <div class="terminal">
-      <div class="terminal-bar">
-        <div class="dot r"></div>
-        <div class="dot y"></div>
-        <div class="dot g"></div>
-      </div>
-      <div><span class="t-prompt">avatar7@s7ue</span><span class="t-out">:</span><span class="t-prompt">~</span><span class="t-out">$</span> <span class="t-cmd">exec s7ue.protocol --mode=argi --network=solana-mainnet</span></div>
-      <div><span class="t-out">» Inicializando Seven Unlock Engine (S7UE)...</span></div>
-      <div><span class="t-out">» Red de Estabilización Séptuple (RES):</span> <span class="t-ok">7 nodos activos</span></div>
-      <div><span class="t-out">» Segmentación periférica:</span> <span class="t-val">144,000 unidades/rotación</span></div>
-      <div><span class="t-out">» Punto de Choque (φ⁻¹):</span> <span class="t-val">r = R × 0.618</span></div>
-      <div><span class="t-out">» Validadores de fase:</span> <span class="t-ok">integrados · deriva=0</span></div>
-      <div><span class="t-out">» M-BFT consensus:</span> <span class="t-ok">READY</span></div>
-      <div><span class="t-out">» Estado general:</span> <span class="t-ok">COHERENCIA CONFIRMADA ✓</span></div>
-      <div>&nbsp;</div>
-      <div><span class="t-prompt">avatar7@s7ue</span><span class="t-out">:</span><span class="t-prompt">~</span><span class="t-out">$</span> <span class="t-cursor"></span></div>
-    </div>
+  <div class="hero-cards">
+    <a href="#protocolo-maestro" class="hero-card">
+      <div class="hero-card-num">01</div>
+      <div class="hero-card-title">Protocolo Maestro</div>
+      <div class="hero-card-desc">Arquitectura AVATAR 7 · Estratos de consenso · Campo de colapso triangular · Estándar Lightron</div>
+      <div class="hero-card-arrow">→ Ver protocolo</div>
+    </a>
+    <a href="#protocolo-tecnico" class="hero-card">
+      <div class="hero-card-num">02</div>
+      <div class="hero-card-title">Protocolo Técnico</div>
+      <div class="hero-card-desc">Visión técnica S7UE · Coherencia escalar · Módulo S7UE-Exchange · Dinámica de colapso de fase</div>
+      <div class="hero-card-arrow">→ Ver arquitectura</div>
+    </a>
+    <a href="#registro-maestro" class="hero-card">
+      <div class="hero-card-num">03</div>
+      <div class="hero-card-title">Registro Maestro</div>
+      <div class="hero-card-desc">Activación en malla S7UE · Inscripción on-chain · Smart contract maestro · Densidad 144,000</div>
+      <div class="hero-card-arrow">→ Activar activo</div>
+    </a>
   </div>
 </section>
 
 <hr class="divider">
 
-<!-- SECCIÓN 1: RESUMEN EJECUTIVO -->
-<section class="section-wrap">
-  <div class="reveal">
-    <p class="section-label">01 · Resumen Ejecutivo</p>
-    <h2 class="section-title">Computación <span>Inercial</span> de Precisión</h2>
+<!-- ═══ SECCIÓN 1: PROTOCOLO MAESTRO ═══ -->
+<section id="protocolo-maestro" class="section-block">
+
+  <div class="reveal section-header">
+    <div>
+      <p class="section-label">01 · Protocolo Maestro</p>
+      <h2 class="section-title">Arquitectura <span>AVATAR 7</span></h2>
+    </div>
+    <span class="section-tag">ARGI · M-BFT · CCT</span>
   </div>
 
-  <div class="reveal spec-grid">
-    <div class="spec-card">
-      <div class="spec-card-num">01.01</div>
-      <div class="spec-card-title">Paradigma No Disipativo</div>
-      <div class="spec-card-body">A diferencia de la computación digital disipativa convencional, el S7UE aprovecha la <span class="hi2">inercia rotacional</span> para registrar estados inmutables. El sistema opera sin pérdida energética en sus ciclos de validación.</div>
+  <!-- Visión + Estándar Lightron -->
+  <div class="reveal step-grid">
+    <div class="step-card">
+      <div class="step-card-num">PM · 01</div>
+      <div class="step-card-title">Visión del Motor S7UE</div>
+      <div class="step-card-body">
+        El motor S7UE es el sistema de validación inercial que garantiza la <strong>inmutabilidad y transparencia</strong> de cada transacción. No es una base de datos estática; es un <span class="hi2">Protocolo de Registro Geométrico Inercial (ARGI)</span> que gestiona la liquidación de activos mediante un campo de colapso de fase.
+      </div>
     </div>
-    <div class="spec-card">
-      <div class="spec-card-num">01.02</div>
-      <div class="spec-card-title">Lógica Determinista</div>
-      <div class="spec-card-body">El motor utiliza geometrías concéntricas como base de cálculo. Cada estado es <span class="hi">predecible, reproducible y verificable</span> mediante trazas mecánicas físicas, eliminando ambigüedad computacional.</div>
+    <div class="step-card">
+      <div class="step-card-num">PM · 02</div>
+      <div class="step-card-title">Estándar Lightron</div>
+      <div class="step-card-body">
+        La unidad de medida universal del ecosistema es el <span class="hi3">Lightron</span>. Toda divisa nacional o criptoactiva se convierte instantáneamente a través del módulo <span class="hi2">S7UE-Exchange</span>. Todas las participaciones <em>(Tilts)</em> se denominan en Lightrons y actúan como vehículo de consenso para validar la propiedad proporcional.
+      </div>
     </div>
-    <div class="spec-card">
-      <div class="spec-card-num">01.03</div>
-      <div class="spec-card-title">Oráculo de Estado Físico</div>
-      <div class="spec-card-body">La información no solo existe en la nube; se inscribe mediante una <span class="hi3">traza mecánica inmutable</span> en el motor. Esto habilita auditoría visual directa y consenso verificable off-chain.</div>
+    <div class="step-card">
+      <div class="step-card-num">PM · 03</div>
+      <div class="step-card-title">Conversión Fluida (AMM)</div>
+      <div class="step-card-body">
+        El módulo AMM interno asegura la <strong>paridad del activo</strong> frente a la volatilidad del mercado. El Lightron opera como ancla de valor en el circuito, desacoplando la liquidación del ruido especulativo externo.
+      </div>
     </div>
-    <div class="spec-card">
-      <div class="spec-card-num">01.04</div>
-      <div class="spec-card-title">Blockchain Mecánico (M-BFT)</div>
-      <div class="spec-card-body">El S7UE implementa una <span class="hi2">Blockchain de Consenso Mecánico</span>: tolerancia a fallos bizantinos resuelta por geometría física, sin dependencia exclusiva de algoritmos de software.</div>
+    <div class="step-card">
+      <div class="step-card-num">PM · 04</div>
+      <div class="step-card-title">Nota para Operadores</div>
+      <div class="step-card-body">
+        Este sistema es <span class="hi">inmutable y matemático</span>. La función del equipo humano es facilitar el acceso y asegurar que las estructuras legales de custodia (Nivel 3) estén siempre alineadas con el registro digital. La coherencia de la plataforma depende de la integridad de este protocolo.
+      </div>
     </div>
   </div>
-</section>
 
-<hr class="divider">
-
-<!-- SECCIÓN 2: ARQUITECTURA RES -->
-<section class="section-wrap">
-  <div class="reveal">
-    <p class="section-label">02 · Arquitectura del Nodo de Consenso</p>
-    <h2 class="section-title">Red de Estabilización <span>Séptuple</span> (RES)</h2>
-  </div>
-
-
-
-    <div class="diagram-legend">
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#a855f7"></div>
-        <div class="legend-label">
-          <strong>7 Nodos Radiales Simétricos</strong>
-          Distribuidos cada 51.42° formando la Carcasa de Referencia Inercial. Cada nodo actúa como validador de fase local independiente.
+  <!-- Estratos de Consenso -->
+  <div class="reveal" style="margin-top:56px">
+    <p class="section-label" style="margin-bottom:24px">Estratos de Consenso · Coherencia Escalar</p>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="nivel-badge nivel-1">Nivel 1</div>
+        <div class="step-card-title">Micro-Liquidación</div>
+        <div class="step-card-body">
+          <strong>Rango: $1 — $1M</strong><br><br>
+          Marketplace de alta frecuencia. Liquidación P2P inmediata gestionada directamente por el motor S7UE. Máxima velocidad de ejecución.
         </div>
       </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#6d28d9"></div>
-        <div class="legend-label">
-          <strong>Entrelazamiento Infinito (∞)</strong>
-          La punta inferior y la punta superior opuesta se entrelazan mediante una curva helicoidal tridimensional (desfase 180°), asegurando un circuito cinemático cerrado.
+      <div class="step-card">
+        <div class="nivel-badge nivel-2">Nivel 2</div>
+        <div class="step-card-title">Liquidación Progresiva</div>
+        <div class="step-card-body">
+          <strong>Rango: $1M — $10M+</strong><br><br>
+          Gestión de bienes físicos: vehículos, tecnología. Validación de estados mediante <span class="hi3">participaciones fraccionadas</span> en el protocolo ARGI.
         </div>
       </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#c9a84c"></div>
-        <div class="legend-label">
-          <strong>Núcleo M-BFT</strong>
-          Centro de resolución de consenso mecánico. Tolerancia a fallos bizantinos mediante geometría, sin dependencia de software externo.
-        </div>
-      </div>
-      <div class="legend-item">
-        <div class="legend-dot" style="background:#1e1e2e; border:1px solid #5a5a7a"></div>
-        <div class="legend-label">
-          <strong>Efecto Serpentín</strong>
-          Las trayectorias son curvas helicoidales 3D. Se eliminan ángulos rectos y puntos muertos para garantizar flujo continuo sin colisiones de fase.
+      <div class="step-card">
+        <div class="nivel-badge nivel-3">Nivel 3</div>
+        <div class="step-card-title">Consenso Institucional</div>
+        <div class="step-card-body">
+          <strong>Alto Valor · Impacto</strong><br><br>
+          Activos inmobiliarios y proyectos de impacto. Integración con estructuras de <span class="hi2">custodia y fideicomisos</span> legales alineadas al registro digital.
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Campo de Colapso Triangular -->
+  <div class="reveal" style="margin-top:56px">
+    <p class="section-label" style="margin-bottom:24px">Campo de Colapso Triangular (CCT) · Dinámica Operativa</p>
+    <div class="step-list">
+      <div class="step-item">
+        <div class="step-item-num">1</div>
+        <div class="step-item-content">
+          <div class="step-item-title">Verificación</div>
+          <div class="step-item-body">El S7UE valida que el 100% de la meta de participaciones (Tilts) esté cubierta antes de ejecutar cualquier acción. El sistema no utiliza sorteos; opera con lógica matemática pura.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">2</div>
+        <div class="step-item-content">
+          <div class="step-item-title">Colapso de Fase</div>
+          <div class="step-item-body">Se produce la liquidación matemática del activo hacia la wallet del poseedor de la mayoría o la cuota correspondiente. El motor ejecuta el colapso de forma determinista e irreversible.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-item-num">3</div>
+        <div class="step-item-content">
+          <div class="step-item-title">Registro Inmutable</div>
+          <div class="step-item-body">El movimiento se inscribe de forma inmutable en la blockchain de Solana. La traza mecánica queda registrada como prueba física verificable en la ledger digital.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <hr class="divider">
 
-<!-- SECCIÓN 3: ESPECIFICACIONES DE DISEÑO -->
-<section class="section-wrap">
-  <div class="reveal">
-    <p class="section-label">03 · Especificaciones de Diseño</p>
-    <h2 class="section-title">Geometría Base <span>& Coincidencia Viable</span></h2>
+<!-- ═══ SECCIÓN 2: PROTOCOLO TÉCNICO ═══ -->
+<section id="protocolo-tecnico" class="section-block">
+
+  <div class="reveal section-header">
+    <div>
+      <p class="section-label">02 · Protocolo Técnico</p>
+      <h2 class="section-title">Arquitectura <span>Técnica S7UE</span></h2>
+    </div>
+    <span class="section-tag">VALIDACIÓN · INERCIAL · ON-CHAIN</span>
   </div>
 
-  <div class="reveal">
-    <div class="formula-block">
-      <div class="formula">r = R × 0.618 (φ⁻¹)</div>
-      <div class="formula-desc">
-        <strong style="color:var(--bright)">Punto de Choque — Elipse de Excentricidad Variable</strong><br>
-        El radio del punto de choque crítico se define como el Radio Primario multiplicado por la inversa del número áureo (φ⁻¹ = 0.618...). Esta relación garantiza que la transferencia de fase en los puntos de choque elipsoidales ocurra sin colisiones mecánicas, permitiendo giro constante y fluido: el estado de coherencia del sistema.
+  <div class="reveal tech-grid">
+    <div class="tech-card full">
+      <div class="tech-card-label">Visión Técnica · Seven Unlock Engine</div>
+      <div class="tech-card-title">Sistema de Validación Inercial</div>
+      <div class="tech-card-body">
+        El motor S7UE garantiza la <strong>inmutabilidad y transparencia</strong> de cada transacción. Opera como un <span class="hi2">Protocolo de Registro Geométrico Inercial (ARGI)</span> — no una base de datos estática, sino un sistema que gestiona la liquidación de activos mediante un campo de colapso de fase. La información se inscribe como <span class="hi3">traza mecánica inmutable</span> verificable off-chain y on-chain simultáneamente.
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-card-label">Módulo de Intercambio</div>
+      <div class="tech-card-title">S7UE-Exchange · AMM</div>
+      <div class="tech-card-body">
+        <ul class="tech-list">
+          <li><strong>Conversión Fluida:</strong> El módulo AMM interno asegura la paridad del activo frente a la volatilidad del mercado en tiempo real.</li>
+          <li><strong>Unidad de Cuenta:</strong> Todas las participaciones <em>(Tilts)</em> se denominan en <span class="hi3">Lightrons</span>, la unidad universal del ecosistema.</li>
+          <li><strong>Sincronía:</strong> El Lightron actúa como vehículo de consenso para validar la propiedad proporcional en el motor S7UE.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="tech-card">
+      <div class="tech-card-label">Consenso · Coherencia Escalar</div>
+      <div class="tech-card-title">Tres Estratos Operativos</div>
+      <div class="tech-card-body">
+        <ul class="tech-list">
+          <li><span class="hi2">Nivel 1 · Micro-Liquidación:</span> Marketplace P2P de alta frecuencia ($1 – $1M). Ejecución inmediata.</li>
+          <li><span class="hi3">Nivel 2 · Liquidación Progresiva:</span> Bienes físicos con participaciones fraccionadas ($1M – $10M+).</li>
+          <li><span class="hi2">Nivel 3 · Consenso Institucional:</span> Inmuebles y proyectos de impacto con custodia legal integrada.</li>
+        </ul>
       </div>
     </div>
   </div>
 
-  <div class="reveal spec-grid">
-    <div class="spec-card">
-      <div class="spec-card-num">03.01</div>
-      <div class="spec-card-title">Radio Primario (R)</div>
-      <div class="spec-card-body">Parámetro base de toda la geometría del motor. <span class="hi2">R determina la escala absoluta</span> del sistema. Todos los demás radios, trayectorias y puntos de choque se derivan de R mediante proporciones áureas y séptuplas.</div>
+  <!-- CCT Cards -->
+  <div class="reveal cct-steps">
+    <div class="cct-step">
+      <div class="cct-step-icon">◈</div>
+      <div class="cct-step-num">01</div>
+      <div class="cct-step-title">Verificación de Cobertura</div>
+      <div class="cct-step-body">El S7UE valida que el 100% de la meta de Tilts esté cubierta antes de ejecutar. Sin excepción.</div>
     </div>
-    <div class="spec-card">
-      <div class="spec-card-num">03.02</div>
-      <div class="spec-card-title">Segmentación Periférica</div>
-      <div class="spec-card-body">La circunferencia exterior está dividida en <span class="hi">144,000 unidades de estado</span> por rotación completa. Esta resolución ultrafina permite registro de fase con precisión submilimétrica en el gemelo digital.</div>
+    <div class="cct-step">
+      <div class="cct-step-icon">⬡</div>
+      <div class="cct-step-num">02</div>
+      <div class="cct-step-title">Colapso de Fase</div>
+      <div class="cct-step-body">Liquidación matemática del activo hacia la wallet del poseedor de la mayoría o cuota proporcional.</div>
     </div>
-    <div class="spec-card">
-      <div class="spec-card-num">03.03</div>
-      <div class="spec-card-title">Ángulo RES</div>
-      <div class="spec-card-body">Los 7 nodos radiales se distribuyen en <span class="hi2">51.42° de separación angular</span> (360°/7). Esta asimetría irracional impide resonancias destructivas y estabiliza el sistema ante perturbaciones externas.</div>
-    </div>
-    <div class="spec-card">
-      <div class="spec-card-num">03.04</div>
-      <div class="spec-card-title">Estabilizadores de Fase</div>
-      <div class="spec-card-body">Integración de <span class="hi3">7 estabilizadores de fase</span> montados en eje perpendicular en cada nodo de la RES. Su función: eliminar completamente la deriva gravitacional, garantizando que la medición de fase sea invariante a la orientación.</div>
-    </div>
-    <div class="spec-card">
-      <div class="spec-card-num">03.05</div>
-      <div class="spec-card-title">Capa Visual Concéntrica</div>
-      <div class="spec-card-body">Arquitectura visual en tres capas: <span class="hi2">Squeleto (RES)</span> → <span class="hi">Flujo (Infinito ∞)</span> → <span class="hi3">Validadores de consenso local</span>. La auditoría visual del estado del sistema es posible a simple vista.</div>
-    </div>
-    <div class="spec-card">
-      <div class="spec-card-num">03.06</div>
-      <div class="spec-card-title">Modulación Cromática</div>
-      <div class="spec-card-body">Los metales nobles — <span class="hi3">oro 24k</span> — se emplean en los elementos de validación para representar mediante modulación cromática el estado de los ciclos de consenso, habilitando lectura óptica directa.</div>
+    <div class="cct-step">
+      <div class="cct-step-icon">∞</div>
+      <div class="cct-step-num">03</div>
+      <div class="cct-step-title">Inscripción Solana</div>
+      <div class="cct-step-body">El movimiento queda inscrito de forma inmutable en la blockchain de Solana. Registro permanente.</div>
     </div>
   </div>
 
-  <!-- TABLA COMPLETA DE COMPONENTES -->
-  <div class="reveal">
-    <table class="spec-table" style="margin-top:48px">
-      <thead>
-        <tr>
-          <th>Componente</th>
-          <th>Especificación de Diseño</th>
-          <th>Parámetro Clave</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td class="key">RES — Nodos Radiales</td>
-          <td class="val">7 validadores de fase local, simétricos, Carcasa de Referencia Inercial</td>
-          <td>360° / 7 = <span style="color:var(--amber)">51.42°</span></td>
-        </tr>
-        <tr>
-          <td class="key">Punto de Choque</td>
-          <td class="val">Elipse de Excentricidad Variable en intersección de trayectorias helicoidales</td>
-          <td>r = R × <span style="color:var(--amber)">0.618 (φ⁻¹)</span></td>
-        </tr>
-        <tr>
-          <td class="key">Segmentación Periférica</td>
-          <td class="val">División ultrafina de la circunferencia exterior para registro de estados</td>
-          <td><span style="color:var(--amber)">144,000</span> unidades/rotación</td>
-        </tr>
-        <tr>
-          <td class="key">Validadores de Fase</td>
-          <td class="val">Montaje axial (eje perpendicular) en cada nodo RES para anular deriva gravitacional</td>
-          <td><span style="color:var(--amber)">7</span> unidades integradas</td>
-        </tr>
-        <tr>
-          <td class="key">Trayectoria de Puntas</td>
-          <td class="val">Entrelazado helicoidal 3D, desfase 180°, sin ángulos rectos ni puntos muertos</td>
-          <td>Curva <span style="color:var(--purple2)">∞</span> continua</td>
-        </tr>
-        <tr>
-          <td class="key">Material — Validación</td>
-          <td class="val">Metales nobles para modulación cromática de estados de consenso</td>
-          <td><span style="color:var(--gold)">Oro 24k</span></td>
-        </tr>
-        <tr>
-          <td class="key">Circuito Cinemático</td>
-          <td class="val">Circuito cerrado garantizado por entrelazamiento, sin puntos de ruptura topológica</td>
-          <td>Cerrado · <span style="color:var(--green)">0 rupturas</span></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="reveal info-box" style="margin-top:48px">
+    <p>Este sistema es <strong>inmutable y matemático</strong>. Nuestra función es facilitar el acceso y asegurar que las estructuras legales de custodia (Nivel 3) estén siempre alineadas con el registro digital. La coherencia de la plataforma depende de la integridad de este protocolo. Los operadores deben dirigir el flujo de datos según el valor del activo y el estrato de consenso correspondiente.</p>
   </div>
+
 </section>
 
 <hr class="divider">
 
-<!-- SECCIÓN 4: PROPUESTA DE VALOR SOLANA -->
-<section class="section-wrap">
-  <div class="reveal">
-    <p class="section-label">04 · Propuesta de Valor para Solana</p>
-    <h2 class="section-title">S7UE como <span>Oráculo de Estado</span> Físico</h2>
+<!-- ═══ SECCIÓN 3: REGISTRO MAESTRO ═══ -->
+<section id="registro-maestro" class="section-block">
+
+  <div class="reveal section-header">
+    <div>
+      <p class="section-label">03 · Registro Maestro de Activo</p>
+      <h2 class="section-title">Activación en <span>Malla S7UE</span></h2>
+    </div>
+    <span class="section-tag">SMART CONTRACT · ON-CHAIN</span>
   </div>
 
-  <div class="reveal">
-    <div class="value-strip">
-      <div class="value-item">
-        <div class="value-icon">⬡</div>
-        <div class="value-name">Sostenibilidad</div>
-        <div class="value-desc">Computación inercial no disipativa. El motor mantiene estado sin consumo energético activo, complementando la eficiencia de Solana PoH.</div>
+  <div class="reveal form-wrap">
+
+    <!-- FORM -->
+    <div class="form-panel">
+      <div class="form-group">
+        <label class="form-label" for="asset-name">Nombre del Activo</label>
+        <input type="text" id="asset-name" class="form-input" placeholder="ej. Clínica La Prairie">
       </div>
-      <div class="value-item">
-        <div class="value-icon">◈</div>
-        <div class="value-name">Inmutabilidad Física</div>
-        <div class="value-desc">Los estados se inscriben como trazas mecánicas irreversibles. La manipulación es físicamente detectable, añadiendo una capa de seguridad material a la cadena digital.</div>
+
+      <div class="form-group">
+        <label class="form-label" for="asset-class">Clase de Activo</label>
+        <select id="asset-class" class="form-select">
+          <option value="salud">Salud</option>
+          <option value="aviacion">Aviación</option>
+          <option value="realestate">Real Estate</option>
+          <option value="automotriz">Automotriz</option>
+        </select>
       </div>
-      <div class="value-item">
-        <div class="value-icon">◎</div>
-        <div class="value-name">Auditoría Visual</div>
-        <div class="value-desc">La arquitectura concéntrica y la modulación cromática permiten verificación de estado a simple vista, sin herramientas digitales, democratizando la auditoría.</div>
+
+      <div class="form-group">
+        <label class="form-label" for="valuation">Valor Tasado (USD)</label>
+        <input type="number" id="valuation" class="form-input" placeholder="0.00">
       </div>
-      <div class="value-item">
-        <div class="value-icon">∞</div>
-        <div class="value-name">M-BFT Mecánico</div>
-        <div class="value-desc">Blockchain de Consenso Mecánico: la validación séptuple garantiza tolerancia a fallos bizantinos mediante geometría física, complementando el consenso PoS de Solana.</div>
+
+      <div class="form-hidden">
+        <span class="form-hidden-label">Densidad de Malla</span>
+        <span class="form-hidden-val">144,000 unidades / rotación</span>
+      </div>
+
+      <button class="form-btn" onclick="registerAsset()">
+        ⬡ Activar en Malla S7UE
+      </button>
+
+      <div class="terminal-confirm" id="terminal-out">
+        <div><span class="t-prompt">s7ue@argi</span><span class="t-out">:~$</span> <span id="t-cmd-line"></span></div>
+        <div><span class="t-out">» Procesando metadatos del activo...</span></div>
+        <div><span class="t-out">» Densidad de malla:</span> <span class="t-val">144,000 u/rot</span></div>
+        <div><span class="t-out">» Desplegando Smart Contract Maestro...</span></div>
+        <div><span class="t-ok">» Activo registrado en Solana. Hash: <span id="t-hash"></span></span></div>
+        <div><span class="t-prompt">s7ue@argi</span><span class="t-out">:~$</span> <span class="t-cursor"></span></div>
       </div>
     </div>
+
+    <!-- INFO SIDEBAR -->
+    <div class="register-info">
+      <div class="register-info-item">
+        <div class="register-info-label">Red</div>
+        <div class="register-info-val purple">SOLANA MAINNET</div>
+        <div class="register-info-sub">PoH + PoS · Finalidad &lt; 400ms</div>
+      </div>
+      <div class="register-info-item">
+        <div class="register-info-label">Densidad de Malla</div>
+        <div class="register-info-val amber">144,000</div>
+        <div class="register-info-sub">Unidades de estado por rotación</div>
+      </div>
+      <div class="register-info-item">
+        <div class="register-info-label">Protocolo</div>
+        <div class="register-info-val purple">ARGI · M-BFT</div>
+        <div class="register-info-sub">Registro Geométrico Inercial · Consenso Mecánico</div>
+      </div>
+      <div class="register-info-item">
+        <div class="register-info-label">Estándar de Valor</div>
+        <div class="register-info-val gold">LIGHTRON</div>
+        <div class="register-info-sub">Unidad de cuenta universal del ecosistema</div>
+      </div>
+      <div class="register-info-item">
+        <div class="register-info-label">Entidad Legal</div>
+        <div class="register-info-val">AVATAR7 LLC</div>
+        <div class="register-info-sub">Florida, USA · EIN 37-2181625</div>
+      </div>
+      <div class="register-info-item">
+        <div class="register-info-label">Estado del Sistema</div>
+        <div class="register-info-val green">OPERATIVO</div>
+        <div class="register-info-sub">Coherencia confirmada · Deriva = 0</div>
+      </div>
+    </div>
+
   </div>
 
-  <!-- ARQUITECTURA EN CAPAS -->
-  <div class="reveal" style="margin-top:48px">
-    <p class="section-label" style="margin-bottom:24px">Capas de Integración con Solana</p>
-    <div class="phase-row">
-      <div class="phase-cell head"></div>
-      <div class="phase-cell head">Capa</div>
-      <div class="phase-cell head">Función en la Red</div>
-    </div>
-    <div class="phase-row">
-      <div class="phase-cell"><span class="phase-num">L1</span></div>
-      <div class="phase-cell" style="color:var(--bright)"><strong>Squeleto — RES</strong><br><span style="color:var(--muted);font-size:.65rem">Red de Estabilización Séptuple</span></div>
-      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">Estructura base de referencia inercial. Equivalente a los validadores de Solana en el plano físico. 7 nodos, cada uno un validador de fase local.</div>
-    </div>
-    <div class="phase-row">
-      <div class="phase-cell"><span class="phase-num">L2</span></div>
-      <div class="phase-cell" style="color:var(--bright)"><strong>Flujo — Infinito ∞</strong><br><span style="color:var(--muted);font-size:.65rem">Trayectorias Helicoidales</span></div>
-      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">Capa de transmisión de estado entre nodos. Los puntos de choque elipsoidales (r = R × φ⁻¹) actúan como puntos de consenso físico donde ocurre la transferencia de fase.</div>
-    </div>
-    <div class="phase-row">
-      <div class="phase-cell"><span class="phase-num">L3</span></div>
-      <div class="phase-cell" style="color:var(--bright)"><strong>Validadores de Fase</strong><br><span style="color:var(--muted);font-size:.65rem">7 Correctores Gravitacionales</span></div>
-      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">Capa de finalización y corrección. Los validadores de fase eliminan la deriva gravitacional, garantizando que el estado registrado sea invariante al entorno. Oro 24k para modulación cromática de estados.</div>
-    </div>
-    <div class="phase-row">
-      <div class="phase-cell"><span class="phase-num">L4</span></div>
-      <div class="phase-cell" style="color:var(--bright)"><strong>On-Chain — Solana VM</strong><br><span style="color:var(--muted);font-size:.65rem">Smart Contracts · PoH + PoS</span></div>
-      <div class="phase-cell" style="font-size:.68rem;color:var(--muted)">El oráculo S7UE inscribe el estado físico como dato verificable en Solana Mainnet. La Blockchain de Consenso Mecánico (M-BFT) corrobora la ledger digital con prueba física inmutable.</div>
-    </div>
-  </div>
 </section>
 
-<hr class="divider">
-
-<!-- SECCIÓN 5: PRUEBA DE COINCIDENCIA -->
-<section class="section-wrap">
-  <div class="reveal">
-    <p class="section-label">05 · Validación</p>
-    <h2 class="section-title">Prueba de <span>Coincidencia</span> Geométrica</h2>
-  </div>
-
-  <div class="reveal" style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border);">
-    <div style="background:var(--panel); padding:36px 32px;">
-      <p class="spec-card-num">OBJETIVO</p>
-      <p style="font-family:var(--sans); font-size:1.1rem; font-weight:700; color:var(--bright); text-transform:uppercase; letter-spacing:.04em; margin-bottom:16px;">Demostrar Coherencia del Sistema</p>
-      <p style="font-size:.72rem; color:var(--muted); line-height:1.9;">
-        Al animar el diseño, el equipo debe demostrar que la <strong style="color:var(--bright)">transferencia de fase</strong> en los puntos de choque elipsoidales ocurre sin colisiones mecánicas, permitiendo un giro constante y fluido que simboliza el estado de coherencia del sistema.
-      </p>
-    </div>
-    <div style="background:var(--panel); padding:36px 32px;">
-      <p class="spec-card-num">CRITERIOS DE ACEPTACIÓN</p>
-      <p style="font-family:var(--sans); font-size:1.1rem; font-weight:700; color:var(--bright); text-transform:uppercase; letter-spacing:.04em; margin-bottom:16px;">Condiciones de Éxito</p>
-      <ul style="font-size:.72rem; color:var(--muted); line-height:2.2; list-style:none; padding:0;">
-        <li><span style="color:var(--green)">✓</span> Cero colisiones mecánicas en puntos de choque</li>
-        <li><span style="color:var(--green)">✓</span> Flujo helicoidal continuo sin puntos muertos</li>
-        <li><span style="color:var(--green)">✓</span> Ratio r/R = 0.618 verificable en planos</li>
-        <li><span style="color:var(--green)">✓</span> 7 validadores de fase activos simultáneamente</li>
-        <li><span style="color:var(--green)">✓</span> 144,000 estados registrables por ciclo</li>
-        <li><span style="color:var(--green)">✓</span> Circuito cinemático cerrado confirmado</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="reveal" style="margin-top:48px; padding:32px; border:1px solid var(--border); background:var(--panel); display:flex; align-items:center; gap:32px; flex-wrap:wrap;">
-    <div>
-      <p style="font-size:.58rem; color:var(--muted); letter-spacing:.25em; text-transform:uppercase; margin-bottom:8px;">Entidad Legal</p>
-      <p style="font-family:var(--sans); font-size:1.5rem; font-weight:800; color:var(--bright);">AVATAR7 LLC</p>
-      <p style="font-size:.65rem; color:var(--muted); margin-top:4px;">Florida, USA · EIN 37-2181625</p>
-    </div>
-    <div style="flex:1; height:1px; background:var(--border); min-width:40px;"></div>
-    <div>
-      <p style="font-size:.58rem; color:var(--muted); letter-spacing:.25em; text-transform:uppercase; margin-bottom:8px;">Red</p>
-      <p style="font-family:var(--sans); font-size:1rem; font-weight:700; color:var(--purple2);">SOLANA MAINNET</p>
-    </div>
-    <div style="flex:1; height:1px; background:var(--border); min-width:40px;"></div>
-    <div>
-      <p style="font-size:.58rem; color:var(--muted); letter-spacing:.25em; text-transform:uppercase; margin-bottom:8px;">Clase de Activo</p>
-      <p style="font-family:var(--sans); font-size:1rem; font-weight:700; color:var(--gold);">RWA · Real World Assets</p>
-    </div>
-    <div style="flex:1; height:1px; background:var(--border); min-width:40px;"></div>
-    <div>
-      <p style="font-size:.58rem; color:var(--muted); letter-spacing:.25em; text-transform:uppercase; margin-bottom:8px;">Fase</p>
-      <p style="font-family:var(--sans); font-size:1rem; font-weight:700; color:var(--green);">CONTROLLED DEPLOYMENT</p>
-    </div>
-  </div>
-</section>
-
-<!-- FOOTER -->
+<!-- ═══ FOOTER ═══ -->
 <footer>
   <div>
     <div class="footer-logo">AVATAR<span>7</span> · S7UE</div>
@@ -889,15 +961,46 @@
 </footer>
 
 <script>
-  // Reveal on scroll
+  // ── Scroll reveal ──
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
-      if (e.isIntersecting) { e.target.classList.add('visible'); }
+      if (e.isIntersecting) e.target.classList.add('visible');
     });
-  }, { threshold: 0.1 });
-
+  }, { threshold: 0.08 });
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // ── Active nav link on scroll ──
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const sectionObserver = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const link = document.querySelector(`.nav-link[href="#${e.target.id}"]`);
+        if (link) link.classList.add('active');
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(s => sectionObserver.observe(s));
+
+  // ── Register asset ──
+  function registerAsset() {
+    const name = document.getElementById('asset-name').value || 'Activo Sin Nombre';
+    const cls  = document.getElementById('asset-class').value;
+    const val  = document.getElementById('valuation').value || '0';
+    const hash = [...Array(16)].map(() => Math.floor(Math.random()*16).toString(16)).join('');
+
+    document.getElementById('t-cmd-line').textContent =
+      `deploy --asset="${name}" --class=${cls} --usd=${val}`;
+    document.getElementById('t-hash').textContent = hash.toUpperCase();
+
+    const term = document.getElementById('terminal-out');
+    term.classList.add('show');
+
+    console.log("Desplegando Contrato Inteligente Maestro...", { name, cls, val });
+  }
 </script>
 </body>
 </html>
-
