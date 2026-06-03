@@ -618,6 +618,124 @@
       .form-wrap { grid-template-columns: 1fr; gap: 24px; }
       footer { padding: 32px 20px; }
     }
+    /* ── AAR ADVISOR ── */
+    .aar-panel {
+      border: 1px solid var(--purple);
+      background: var(--panel);
+      padding: 40px 40px 36px;
+      position: relative;
+    }
+
+    .aar-panel::before {
+      content: 'MÓDULO AAR · OPTIMIZACIÓN ACTIVA';
+      position: absolute; top: -9px; left: 24px;
+      background: var(--bg); padding: 0 10px;
+      font-size: .52rem; color: var(--purple2);
+      letter-spacing: .25em;
+    }
+
+    .aar-header {
+      display: flex; align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 28px; flex-wrap: wrap; gap: 16px;
+    }
+
+    .aar-title {
+      font-family: var(--sans); font-size: 1.5rem;
+      font-weight: 800; color: var(--bright);
+      text-transform: uppercase; letter-spacing: -.01em;
+    }
+    .aar-title span { color: var(--purple2); }
+
+    .aar-status {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .58rem; color: var(--green);
+      letter-spacing: .2em; text-transform: uppercase;
+      padding: 6px 14px; border: 1px solid rgba(34,197,94,.3);
+    }
+
+    .aar-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--green);
+      animation: pulse 2s infinite;
+      flex-shrink: 0;
+    }
+
+    .aar-terminal {
+      background: #080810; border: 1px solid var(--border);
+      padding: 20px 24px; font-family: var(--code);
+      font-size: .68rem; line-height: 2;
+      margin-bottom: 28px;
+    }
+
+    .t-cursor-aar {
+      display: inline-block; width: 7px; height: 12px;
+      background: var(--muted);
+      animation: blink 1.2s step-end infinite;
+      vertical-align: middle;
+    }
+
+    .aar-message {
+      border: 1px solid var(--border);
+      padding: 22px 26px; margin-bottom: 28px;
+      background: rgba(142,68,173,.04);
+    }
+
+    .aar-message-label {
+      font-size: .52rem; color: var(--muted);
+      letter-spacing: .25em; text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .aar-message p {
+      font-size: .72rem; color: var(--text); line-height: 1.9;
+    }
+
+    .aar-asset {
+      color: var(--purple2); font-weight: bold;
+    }
+
+    .aar-asset.aar-alert {
+      color: var(--amber);
+    }
+
+    .aar-actions {
+      display: flex; align-items: center;
+      gap: 24px; flex-wrap: wrap;
+    }
+
+    .aar-btn {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 13px 28px;
+      background: transparent;
+      border: 1px solid var(--green);
+      color: var(--green);
+      font-family: var(--sans); font-size: .72rem;
+      font-weight: 700; letter-spacing: .15em;
+      text-transform: uppercase; cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+
+    .aar-btn:hover {
+      background: var(--green); color: #000;
+    }
+
+    .aar-btn-icon { font-size: .9rem; }
+
+    .aar-meta {
+      display: flex; flex-direction: column; gap: 4px;
+      font-size: .6rem; color: var(--muted); letter-spacing: .1em;
+    }
+
+    .aar-confirm {
+      display: none;
+      background: #080810; border: 1px solid rgba(34,197,94,.3);
+      padding: 20px 24px; font-family: var(--code);
+      font-size: .68rem; line-height: 2; margin-top: 24px;
+    }
+
+    .aar-confirm.show { display: block; }
+
   </style>
 </head>
 <body>
@@ -948,6 +1066,63 @@
 
 </section>
 
+<!-- ═══ CONSEJERO AAR ═══ -->
+<section id="aar-advisor" class="section-block" style="padding-top:0">
+  <div class="reveal">
+    <div class="aar-panel">
+      <div class="aar-header">
+        <div>
+          <p class="section-label" style="margin-bottom:8px">Módulo Inteligente · AAR</p>
+          <h3 class="aar-title">Consejero de Optimización <span>AAR</span></h3>
+        </div>
+        <div class="aar-status">
+          <span class="aar-dot"></span>
+          ANALIZANDO MALLA
+        </div>
+      </div>
+
+      <div class="aar-terminal">
+        <div class="terminal-bar" style="margin-bottom:14px">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        </div>
+        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span style="color:var(--bright)">exec aar.optimize --scan=full --protocol=argi</span></div>
+        <div><span class="t-out">» Analizando densidad de malla y flujo de usufructo...</span></div>
+        <div id="aar-scan-line"><span class="t-out">» Escaneando posiciones activas</span> <span class="t-cursor-aar"></span></div>
+      </div>
+
+      <div class="aar-message" id="aar-message">
+        <div class="aar-message-label">SUGERENCIA DEL SISTEMA</div>
+        <p>
+          Tu posición en <span class="aar-asset">[Activo de Aviación]</span> está optimizada.
+          Se detecta una ventana de rebalanceo en <span class="aar-asset aar-alert">[Activo de Salud - Fase 2]</span>.
+        </p>
+      </div>
+
+      <div class="aar-actions">
+        <button class="aar-btn" onclick="executeOptimizedFlow()">
+          <span class="aar-btn-icon">⬡</span>
+          EJECUTAR REBALANCEO AUTOMÁTICO
+        </button>
+        <div class="aar-meta">
+          <span>Densidad de malla activa: <strong style="color:var(--gold)">144,000 u/rot</strong></span>
+          <span>Protocolo: <strong style="color:var(--purple2)">ARGI · M-BFT</strong></span>
+        </div>
+      </div>
+
+      <div class="aar-confirm" id="aar-confirm">
+        <div class="terminal-bar" style="margin-bottom:12px">
+          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
+        </div>
+        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span style="color:var(--bright)">exec rebalance --mode=auto --confirm=true</span></div>
+        <div><span class="t-out">» Redirigiendo flujo de capital...</span></div>
+        <div><span class="t-out">» Actualizando posiciones en Protocolo Maestro...</span></div>
+        <div><span class="t-ok">» Rebalanceo ejecutado. Capital redirigido para maximizar usufructo. ✓</span></div>
+        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span class="t-cursor"></span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ═══ FOOTER ═══ -->
 <footer>
   <div>
@@ -1000,6 +1175,19 @@
     term.classList.add('show');
 
     console.log("Desplegando Contrato Inteligente Maestro...", { name, cls, val });
+  }
+
+  // ── AAR Rebalanceo ──
+  function executeOptimizedFlow() {
+    // Simula el escaneo en terminal antes de confirmar
+    const scanLine = document.getElementById('aar-scan-line');
+    scanLine.innerHTML = '<span class="t-ok">» Posiciones escaneadas. Ventana de rebalanceo confirmada. ✓</span>';
+
+    const confirm = document.getElementById('aar-confirm');
+    confirm.classList.add('show');
+    confirm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+    console.log("AAR: Flujo de capital actualizado en el Protocolo Maestro.");
   }
 </script>
 </body>
