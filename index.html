@@ -185,7 +185,7 @@
 
     /* Section jump cards */
     .hero-cards {
-      display: grid; grid-template-columns: repeat(3, 1fr);
+      display: grid; grid-template-columns: repeat(4, 1fr);
       gap: 1px; background: var(--border);
       border: 1px solid var(--border);
       margin-top: 56px; width: 100%; max-width: 860px;
@@ -609,7 +609,7 @@
       nav { padding: 0 20px; }
       .nav-links { display: none; }
       .hero { padding: 100px 20px 60px; }
-      .hero-cards { grid-template-columns: 1fr; }
+      .hero-cards { grid-template-columns: 1fr 1fr; }
       .section-block { padding: 60px 20px; }
       .divider { margin: 0 20px; }
       .tech-grid { grid-template-columns: 1fr; }
@@ -749,6 +749,8 @@
     <a href="#protocolo-tecnico" class="nav-link">02 · Protocolo Técnico</a>
     <div class="nav-sep"></div>
     <a href="#registro-maestro" class="nav-link">03 · Registro Maestro</a>
+    <div class="nav-sep"></div>
+    <a href="#aar-advisor" class="nav-link">04 · Consejero AAR</a>
   </div>
   <div class="nav-status">SISTEMA ACTIVO · SOLANA MAINNET</div>
 </nav>
@@ -787,6 +789,12 @@
       <div class="hero-card-title">Registro Maestro</div>
       <div class="hero-card-desc">Activación en malla S7UE · Inscripción on-chain · Smart contract maestro · Densidad 144,000</div>
       <div class="hero-card-arrow">→ Activar activo</div>
+    </a>
+    <a href="#aar-advisor" class="hero-card">
+      <div class="hero-card-num">04</div>
+      <div class="hero-card-title">Consejero AAR</div>
+      <div class="hero-card-desc">Algoritmo de Asesoría de Rendimiento · Análisis de posiciones · Ventanas de rebalanceo · Guía operativa</div>
+      <div class="hero-card-arrow">→ Ver consejero</div>
     </a>
   </div>
 </section>
@@ -1067,12 +1075,22 @@
 </section>
 
 <!-- ═══ CONSEJERO AAR ═══ -->
-<section id="aar-advisor" class="section-block" style="padding-top:0">
+<section id="aar-advisor" class="section-block">
+
+  <div class="reveal section-header">
+    <div>
+      <p class="section-label">04 · Consejero AAR</p>
+      <h2 class="section-title">Algoritmo de <span>Asesoría de Rendimiento</span></h2>
+    </div>
+    <span class="section-tag">ANÁLISIS · MALLA · PORTAFOLIO</span>
+  </div>
+
+  <!-- Terminal de escaneo -->
   <div class="reveal">
     <div class="aar-panel">
       <div class="aar-header">
         <div>
-          <p class="section-label" style="margin-bottom:8px">Módulo Inteligente · AAR</p>
+          <p class="section-label" style="margin-bottom:8px">Estado del Módulo</p>
           <h3 class="aar-title">Consejero de Optimización <span>AAR</span></h3>
         </div>
         <div class="aar-status">
@@ -1085,42 +1103,131 @@
         <div class="terminal-bar" style="margin-bottom:14px">
           <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
         </div>
-        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span style="color:var(--bright)">exec aar.optimize --scan=full --protocol=argi</span></div>
-        <div><span class="t-out">» Analizando densidad de malla y flujo de usufructo...</span></div>
-        <div id="aar-scan-line"><span class="t-out">» Escaneando posiciones activas</span> <span class="t-cursor-aar"></span></div>
-      </div>
-
-      <div class="aar-message" id="aar-message">
-        <div class="aar-message-label">SUGERENCIA DEL SISTEMA</div>
-        <p>
-          Tu posición en <span class="aar-asset">[Activo de Aviación]</span> está optimizada.
-          Se detecta una ventana de rebalanceo en <span class="aar-asset aar-alert">[Activo de Salud - Fase 2]</span>.
-        </p>
-      </div>
-
-      <div class="aar-actions">
-        <button class="aar-btn" onclick="executeOptimizedFlow()">
-          <span class="aar-btn-icon">⬡</span>
-          EJECUTAR REBALANCEO AUTOMÁTICO
-        </button>
-        <div class="aar-meta">
-          <span>Densidad de malla activa: <strong style="color:var(--gold)">144,000 u/rot</strong></span>
-          <span>Protocolo: <strong style="color:var(--purple2)">ARGI · M-BFT</strong></span>
-        </div>
-      </div>
-
-      <div class="aar-confirm" id="aar-confirm">
-        <div class="terminal-bar" style="margin-bottom:12px">
-          <div class="dot r"></div><div class="dot y"></div><div class="dot g"></div>
-        </div>
-        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span style="color:var(--bright)">exec rebalance --mode=auto --confirm=true</span></div>
-        <div><span class="t-out">» Redirigiendo flujo de capital...</span></div>
-        <div><span class="t-out">» Actualizando posiciones en Protocolo Maestro...</span></div>
-        <div><span class="t-ok">» Rebalanceo ejecutado. Capital redirigido para maximizar usufructo. ✓</span></div>
+        <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span style="color:var(--bright)">exec aar.scan --mode=full --protocol=argi --mesh=144000</span></div>
+        <div><span class="t-out">» Conectando con Red de Estabilización Séptuple (RES)...</span></div>
+        <div><span class="t-out">» Leyendo densidad de malla:</span> <span style="color:var(--gold)">144,000 nodos activos</span></div>
+        <div><span class="t-out">» Mapeando posiciones del portafolio...</span></div>
+        <div><span class="t-ok">» Escaneo completado. Estado de sincronía disponible. ✓</span></div>
         <div><span class="t-prompt">aar@s7ue</span><span class="t-out">:~$</span> <span class="t-cursor"></span></div>
       </div>
     </div>
   </div>
+
+  <!-- Panel de estado del portafolio -->
+  <div class="reveal" style="margin-top:1px">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:1px; background:var(--border); border:1px solid var(--border);">
+
+      <div style="background:var(--panel); padding:32px 28px;">
+        <div class="aar-message-label" style="margin-bottom:16px">ESTADO DE POSICIONES ACTIVAS</div>
+        <div style="display:flex; flex-direction:column; gap:14px;">
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border:1px solid var(--border); background:var(--bg);">
+            <div>
+              <div style="font-size:.58rem; color:var(--muted); letter-spacing:.2em; text-transform:uppercase; margin-bottom:4px;">Activo · Aviación</div>
+              <div style="font-family:var(--sans); font-size:.85rem; font-weight:700; color:var(--bright);">[Clase de Activo]</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.55rem; color:var(--muted); letter-spacing:.15em; margin-bottom:4px;">ESTADO</div>
+              <div style="font-family:var(--sans); font-size:.75rem; font-weight:700; color:var(--green);">SINCRONIZADO</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border:1px solid var(--amber); background:rgba(211,84,0,.04);">
+            <div>
+              <div style="font-size:.58rem; color:var(--muted); letter-spacing:.2em; text-transform:uppercase; margin-bottom:4px;">Activo · Salud — Fase 2</div>
+              <div style="font-family:var(--sans); font-size:.85rem; font-weight:700; color:var(--bright);">[Clase de Activo]</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.55rem; color:var(--muted); letter-spacing:.15em; margin-bottom:4px;">ESTADO</div>
+              <div style="font-family:var(--sans); font-size:.75rem; font-weight:700; color:var(--amber);">AJUSTE PENDIENTE</div>
+            </div>
+          </div>
+
+          <div style="display:flex; justify-content:space-between; align-items:center; padding:14px 16px; border:1px solid var(--border); background:var(--bg);">
+            <div>
+              <div style="font-size:.58rem; color:var(--muted); letter-spacing:.2em; text-transform:uppercase; margin-bottom:4px;">Activo · Real Estate</div>
+              <div style="font-family:var(--sans); font-size:.85rem; font-weight:700; color:var(--bright);">[Clase de Activo]</div>
+            </div>
+            <div style="text-align:right;">
+              <div style="font-size:.55rem; color:var(--muted); letter-spacing:.15em; margin-bottom:4px;">ESTADO</div>
+              <div style="font-family:var(--sans); font-size:.75rem; font-weight:700; color:var(--green);">SINCRONIZADO</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div style="background:var(--panel); padding:32px 28px;">
+        <div class="aar-message-label" style="margin-bottom:16px">LECTURA DEL SISTEMA</div>
+        <div class="aar-message" style="margin-bottom:20px">
+          <p>
+            El motor detecta que la composición del portafolio presenta una desviación en
+            <span class="aar-asset aar-alert">[Activo de Salud — Fase 2]</span>
+            respecto a los parámetros de configuración registrados en la malla S7UE.
+            <br><br>
+            Esta lectura es informativa. Cualquier acción sobre el portafolio debe ser
+            iniciada y confirmada manualmente por el titular del activo conforme
+            a los términos del Protocolo Maestro.
+          </p>
+        </div>
+        <div style="display:flex; flex-direction:column; gap:8px;">
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; border:1px solid var(--border); font-size:.65rem;">
+            <span style="color:var(--muted); letter-spacing:.1em;">Densidad de malla</span>
+            <strong style="color:var(--gold)">144,000 nodos</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; border:1px solid var(--border); font-size:.65rem;">
+            <span style="color:var(--muted); letter-spacing:.1em;">Protocolo activo</span>
+            <strong style="color:var(--purple2)">ARGI · M-BFT</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; border:1px solid var(--border); font-size:.65rem;">
+            <span style="color:var(--muted); letter-spacing:.1em;">Estándar de valor</span>
+            <strong style="color:var(--gold)">LIGHTRON</strong>
+          </div>
+          <div style="display:flex; justify-content:space-between; padding:10px 14px; border:1px solid var(--border); font-size:.65rem;">
+            <span style="color:var(--muted); letter-spacing:.1em;">Red</span>
+            <strong style="color:var(--purple2)">SOLANA MAINNET</strong>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Qué es AAR -->
+  <div class="reveal" style="margin-top:48px">
+    <p class="section-label" style="margin-bottom:24px">Acerca del Módulo AAR</p>
+    <div class="step-grid">
+      <div class="step-card">
+        <div class="step-card-num">AAR · 01</div>
+        <div class="step-card-title">Lectura de Malla</div>
+        <div class="step-card-body">
+          El módulo AAR lee en tiempo real la densidad de los <span class="hi3">144,000 nodos</span> de la malla S7UE para generar un mapa de estado de cada posición registrada en el protocolo ARGI.
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-card-num">AAR · 02</div>
+        <div class="step-card-title">Estado de Sincronía</div>
+        <div class="step-card-body">
+          Informa si cada activo del portafolio está alineado con los parámetros de configuración registrados por el titular. <span class="hi2">No emite recomendaciones de inversión</span> — reporta el estado de sincronía del sistema.
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-card-num">AAR · 03</div>
+        <div class="step-card-title">Trazabilidad</div>
+        <div class="step-card-body">
+          Cada lectura del módulo AAR queda registrada en la cadena como evento de auditoría. La <span class="hi3">transparencia total</span> es garantizada por el protocolo M-BFT y la ledger inmutable de Solana.
+        </div>
+      </div>
+      <div class="step-card">
+        <div class="step-card-num">AAR · 04</div>
+        <div class="step-card-title">Módulo en Desarrollo</div>
+        <div class="step-card-body">
+          Las funciones de configuración activa del portafolio están en proceso de integración legal y técnica. Esta vista es la <span class="hi2">interfaz de lectura</span> del sistema. Las acciones operativas se habilitarán conforme al marco regulatorio aplicable.
+        </div>
+      </div>
+    </div>
+  </div>
+
 </section>
 
 <!-- ═══ FOOTER ═══ -->
@@ -1176,19 +1283,7 @@
 
     console.log("Desplegando Contrato Inteligente Maestro...", { name, cls, val });
   }
-
-  // ── AAR Rebalanceo ──
-  function executeOptimizedFlow() {
-    // Simula el escaneo en terminal antes de confirmar
-    const scanLine = document.getElementById('aar-scan-line');
-    scanLine.innerHTML = '<span class="t-ok">» Posiciones escaneadas. Ventana de rebalanceo confirmada. ✓</span>';
-
-    const confirm = document.getElementById('aar-confirm');
-    confirm.classList.add('show');
-    confirm.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-
-    console.log("AAR: Flujo de capital actualizado en el Protocolo Maestro.");
-  }
 </script>
 </body>
 </html>
+
